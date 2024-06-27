@@ -2,7 +2,7 @@ import "~/global.css";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
-import { SplashScreen, Stack } from "expo-router";
+import { router, SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Platform } from "react-native";
@@ -11,6 +11,9 @@ import { useColorScheme } from "~/lib/useColorScheme";
 import { PortalHost } from "~/components/primitives/portal";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { useAuth } from "~/lib/auth/useAuth";
+import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
+import { auth } from "~/firebase/config";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -72,6 +75,16 @@ export default function RootLayout() {
             name="(tabs)"
             options={{
               title: "Home page",
+              headerLeft: () => (
+                <Button
+                  onPress={() => {
+                    auth.signOut();
+                    router.replace("/");
+                  }}
+                >
+                  <Text>Logout</Text>
+                </Button>
+              ),
               headerRight: () => <ThemeToggle />,
             }}
           />

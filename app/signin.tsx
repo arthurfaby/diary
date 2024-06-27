@@ -2,11 +2,18 @@ import { ScrollView } from "react-native";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
-import { GithubAuthProvider, signInWithCredential } from "@firebase/auth";
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "@firebase/auth";
 import { auth } from "~/firebase/config";
 import { useEffect } from "react";
-import { useAuth } from "~/lib/auth/useAuth";
-import { router } from "expo-router";
+import { MyUser, useAuth } from "~/lib/auth/useAuth";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from "@react-native-google-signin/google-signin";
 
 export default function Screen() {
   const { setUser } = useAuth();
@@ -46,20 +53,48 @@ export default function Screen() {
   }
 
   async function handleGithubResponse() {
-    // Verify that everything went well
-    if (githubReponse?.type === "success") {
-      // Here we grab the code from the response
-      const { code } = githubReponse.params;
+    try {
+      // Verify that everything went well
+      if (githubReponse?.type === "success") {
+        // Here we grab the code from the response
+        const { code } = githubReponse.params;
 
-      const { token_type, scope, access_token } =
-        await createGithubTokenWithCode(code);
+        const { token_type, scope, access_token } =
+          await createGithubTokenWithCode(code);
 
-      if (!access_token) return;
-      const credential = GithubAuthProvider.credential(access_token);
-      const data = await signInWithCredential(auth, credential);
-      setUser(data.user);
+        if (!access_token) return;
+        const credential = GithubAuthProvider.credential(access_token);
+        const data = await signInWithCredential(auth, credential);
+        setUser({
+          name: data.user.displayName ?? "Unknown",
+          email: data.user.email ?? "Unknown",
+          photoURL: data.user.photoURL ?? undefined,
+        } as MyUser);
+      }
+    } catch (e) {
+      console.log("error", e);
     }
   }
+
+  useEffect(() => {
+    GoogleSignin.configure();
+  }, []);
+
+  const signInWithGoogle = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = GoogleAuthProvider.credential(idToken);
+      const data = await signInWithCredential(auth, googleCredential);
+      setUser({
+        name: data.user.displayName ?? "Unknown",
+        email: data.user.email ?? "Unknown",
+        photoURL: data.user.photoURL ?? undefined,
+      } as MyUser);
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
 
   useEffect(() => {
     handleGithubResponse();
@@ -67,7 +102,7 @@ export default function Screen() {
 
   return (
     <ScrollView contentContainerClassName="flex-1 justify-center items-center p-6 gap-4">
-      <Button>
+      <Button onPress={signInWithGoogle}>
         <Text>Login with Google</Text>
       </Button>
       <Button

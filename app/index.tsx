@@ -4,16 +4,24 @@ import { ScrollView } from "react-native";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { router, usePathname } from "expo-router";
-import { useAuth } from "~/lib/auth/useAuth";
+import { MyUser, useAuth } from "~/lib/auth/useAuth";
 import { auth } from "~/firebase/config";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 export default function Screen() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const pathname = usePathname();
 
   useEffect(() => {
     return auth.onAuthStateChanged((user) => {
-      useAuth.setState({ user, isAuthenticated: !!user });
+      const myUser: MyUser | null = user
+        ? ({
+            email: user.email ?? "Unknown email",
+            name: user.displayName ?? "Unknown name",
+            photoURL: user.photoURL,
+          } as MyUser)
+        : null;
+      setUser(myUser);
       console.log("user", user?.email, pathname);
       if (user && pathname !== "/") {
         if (router.canGoBack()) {
