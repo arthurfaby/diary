@@ -10,6 +10,7 @@ import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { PortalHost } from "~/components/primitives/portal";
 import { ThemeToggle } from "~/components/ThemeToggle";
+import { useAuth } from "~/lib/auth/useAuth";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -31,6 +32,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+  const { user } = useAuth();
 
   React.useEffect(() => {
     (async () => {
@@ -62,18 +64,34 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-      <Stack>
-        <Stack.Screen
-          name="index"
-          options={{
-            title: "Diary App",
-            headerRight: () => <ThemeToggle />,
-          }}
-        />
-      </Stack>
-      <PortalHost />
-    </ThemeProvider>
+    <React.StrictMode>
+      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+        <Stack>
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              title: "Home page",
+              headerRight: () => <ThemeToggle />,
+            }}
+          />
+          <Stack.Screen
+            name="index"
+            options={{
+              title: "Diary App",
+              headerRight: () => <ThemeToggle />,
+            }}
+          />
+          <Stack.Screen
+            name="signin"
+            options={{
+              title: "Sign In Page",
+              headerRight: () => <ThemeToggle />,
+            }}
+          />
+        </Stack>
+        <PortalHost />
+      </ThemeProvider>
+    </React.StrictMode>
   );
 }

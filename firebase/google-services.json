@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "778275370686",
+    "project_id": "diaryapp-421012",
+    "storage_bucket": "diaryapp-421012.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778275370686:android:c4e9c498f3900e85f590ef",
+        "android_client_info": {
+          "package_name": "com.arthurfaby.diaryapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778275370686-71u5suromtpiavqu55uj0p5h1hbcc6o3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdwjlVxDDI7juOPNyV75GJtjNwwyw4FQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778275370686-71u5suromtpiavqu55uj0p5h1hbcc6o3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "778275370686-6nf73s34mndncc0t33mo3p4pj86bg34v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.arthurfaby.diaryapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
