@@ -1,15 +1,10 @@
-import * as React from "react";
 import { ScrollView } from "react-native";
 import { Text } from "~/components/ui/text";
-import { Button } from "~/components/ui/button";
 
 export default function Screen() {
   return (
     <ScrollView contentContainerClassName="flex-1 justify-center items-center p-6 gap-4">
-      <Text className="text-3xl font-bold">Welcome to dryapp !</Text>
-      <Button className="w-full">
-        <Text>Login</Text>
-      </Button>
+      <Text>Profile Page</Text>
     </ScrollView>
   );
 }
