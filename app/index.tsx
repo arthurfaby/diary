@@ -7,9 +7,11 @@ import { router, usePathname } from "expo-router";
 import { MyUser, useAuth } from "~/lib/auth/useAuth";
 import { auth } from "~/firebase/config";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { useNotes } from "~/lib/api/notes/store";
 
 export default function Screen() {
   const { user, setUser } = useAuth();
+  const { resetNotes } = useNotes();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -22,12 +24,14 @@ export default function Screen() {
           } as MyUser)
         : null;
       setUser(myUser);
-      console.log("user", user?.email, pathname);
-      if (user && pathname !== "/") {
-        if (router.canGoBack()) {
-          router.back();
+      if (user) {
+        resetNotes();
+        if (pathname !== "/") {
+          if (router.canGoBack()) {
+            router.back();
+          }
+          router.replace("profile");
         }
-        router.replace("profile");
       }
     });
   }, [pathname]);

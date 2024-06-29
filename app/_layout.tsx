@@ -14,6 +14,7 @@ import { useAuth } from "~/lib/auth/useAuth";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
 import { auth } from "~/firebase/config";
+import Toast from "react-native-toast-message";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -67,44 +68,43 @@ export default function RootLayout() {
   }
 
   return (
-    <React.StrictMode>
-      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-        <Stack>
-          <Stack.Screen
-            name="(tabs)"
-            options={{
-              title: "Home page",
-              headerLeft: () => (
-                <Button
-                  onPress={() => {
-                    auth.signOut();
-                    router.replace("/");
-                  }}
-                >
-                  <Text>Logout</Text>
-                </Button>
-              ),
-              headerRight: () => <ThemeToggle />,
-            }}
-          />
-          <Stack.Screen
-            name="index"
-            options={{
-              title: "Diary App",
-              headerRight: () => <ThemeToggle />,
-            }}
-          />
-          <Stack.Screen
-            name="signin"
-            options={{
-              title: "Sign In Page",
-              headerRight: () => <ThemeToggle />,
-            }}
-          />
-        </Stack>
-        <PortalHost />
-      </ThemeProvider>
-    </React.StrictMode>
+    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+      <Stack>
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            title: "Home page",
+            headerLeft: () => (
+              <Button
+                onPress={() => {
+                  auth.signOut();
+                  router.replace("/");
+                }}
+              >
+                <Text>Logout</Text>
+              </Button>
+            ),
+            headerRight: () => <ThemeToggle />,
+          }}
+        />
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Diary App",
+            headerRight: () => <ThemeToggle />,
+          }}
+        />
+        <Stack.Screen
+          name="signin"
+          options={{
+            title: "Sign In Page",
+            headerRight: () => <ThemeToggle />,
+          }}
+        />
+      </Stack>
+      <PortalHost />
+      <Toast />
+    </ThemeProvider>
   );
 }

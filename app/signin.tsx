@@ -10,10 +10,8 @@ import {
 import { auth } from "~/firebase/config";
 import { useEffect } from "react";
 import { MyUser, useAuth } from "~/lib/auth/useAuth";
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-} from "@react-native-google-signin/google-signin";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import Toast from "react-native-toast-message";
 
 export default function Screen() {
   const { setUser } = useAuth();
@@ -72,12 +70,19 @@ export default function Screen() {
         } as MyUser);
       }
     } catch (e) {
-      console.log("error", e);
+      const message = e instanceof Error ? e.message : "An error occurred";
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: message,
+      });
     }
   }
 
   useEffect(() => {
-    GoogleSignin.configure();
+    GoogleSignin.configure({
+      webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+    });
   }, []);
 
   const signInWithGoogle = async () => {
@@ -92,7 +97,12 @@ export default function Screen() {
         photoURL: data.user.photoURL ?? undefined,
       } as MyUser);
     } catch (e) {
-      console.log("error", e);
+      const message = e instanceof Error ? e.message : "An error occurred";
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: message,
+      });
     }
   };
 

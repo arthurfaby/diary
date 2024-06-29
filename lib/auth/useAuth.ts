@@ -1,16 +1,16 @@
 import { create } from "zustand";
 
-export type MyUser = {
+export interface MyUser {
   email: string;
   name: string;
   photoURL?: string;
-};
+}
 
-type AuthStoreType = {
+interface AuthStoreType {
   user: MyUser | null;
   isAuthenticated: boolean;
   setUser: (user: MyUser | null) => void;
-};
+}
 
 const useAuth = create<AuthStoreType>((set) => ({
   user: null,
