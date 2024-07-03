@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>778275370686-e6ebnajm5osbpl9l5atorbgcsa92ika9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.778275370686-e6ebnajm5osbpl9l5atorbgcsa92ika9</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>778275370686-4taf2ahkjfh51gidin0tileonpsmrkdo.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCAu6UbnczqlT9kqrcWZWhEw1j3NvEg26E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>778275370686</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.arthurfaby.diary-app</string>
+	<key>PROJECT_ID</key>
+	<string>diaryapp-421012</string>
+	<key>STORAGE_BUCKET</key>
+	<string>diaryapp-421012.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:778275370686:ios:2b105ac64b1330c3f590ef</string>
+</dict>
+</plist>
