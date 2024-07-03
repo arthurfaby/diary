@@ -1,22 +1,33 @@
-import { Image, ScrollView, View } from "react-native";
+import { Image, View } from "react-native";
 import { Text } from "~/components/ui/text";
 import { useAuth } from "~/lib/auth/useAuth";
 import { Redirect } from "expo-router";
 import { AddNote } from "~/components/notes/addNote";
 import { useNotes } from "~/lib/api/notes/store";
 import { useEffect } from "react";
-import { collection, getDocs, where, query } from "@firebase/firestore";
-import { db, NotesCollection } from "~/firebase/config";
-import { iNote } from "~/firebase/types/iNote";
+import { getDocs, where, query } from "@firebase/firestore";
+import { NotesCollection } from "~/firebase/config";
+import { eFeelings, iNote } from "~/firebase/types/iNote";
 import { NoteCard } from "~/components/notes/noteCard";
+import { Feeling } from "~/components/notes/feeling";
 
-export default function Screen() {
+export function ProfileScreen() {
   const { user } = useAuth();
   const { notes, addNote, removeNote } = useNotes();
 
   if (!user) {
     return <Redirect href={"/"} />;
   }
+
+  const getFeelingPercentage = (feeling: eFeelings) => {
+    if (notes.length === 0) {
+      return 0;
+    }
+    return Math.round(
+      (notes.filter((note) => note.feeling === feeling).length / notes.length) *
+        100
+    );
+  };
 
   useEffect(() => {
     const getNotes = async () => {
@@ -51,19 +62,62 @@ export default function Screen() {
         <Text className="text-3xl font-bold">{user.name}</Text>
       </View>
 
-      <ScrollView
-        className="h-full flex-col gap-4 overflow-auto"
-        showsVerticalScrollIndicator={false}
-      >
+      <View className=" flex-col gap-4">
         {notes.length === 0 && (
           <Text className="text-center">
             No notes yet. Add one with the button in the bottom right corner.
           </Text>
         )}
-        {notes.map((note) => {
-          return <NoteCard key={note.id} note={note} />;
-        })}
-      </ScrollView>
+        {notes.length === 1 && (
+          <Text className="font-bold text-lg">Your last note :</Text>
+        )}
+        {notes.length > 1 && (
+          <Text className="font-bold text-lg">Your 2 last notes :</Text>
+        )}
+        <View>
+          {notes.length > 0 &&
+            notes.slice(0, 2).map((note) => {
+              return <NoteCard key={note.id} note={note} small={true} />;
+            })}
+        </View>
+        {notes.length > 0 && (
+          <Text className="font-bold text-lg">
+            Feelings of your {notes.length} note{notes.length > 1 && "s"}
+          </Text>
+        )}
+      </View>
+      <View className="flex flex-row gap-2 w-[100%]">
+        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+          <Feeling feeling={eFeelings.VERY_HAPPY} />
+          <Text className="font-bold">
+            {getFeelingPercentage(eFeelings.VERY_HAPPY)} %
+          </Text>
+        </View>
+        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+          <Feeling feeling={eFeelings.HAPPY} />
+          <Text className="font-bold">
+            {getFeelingPercentage(eFeelings.HAPPY)} %
+          </Text>
+        </View>
+        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+          <Feeling feeling={eFeelings.NEUTRAL} />
+          <Text className="font-bold">
+            {getFeelingPercentage(eFeelings.NEUTRAL)} %
+          </Text>
+        </View>
+        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+          <Feeling feeling={eFeelings.SAD} />
+          <Text className="font-bold">
+            {getFeelingPercentage(eFeelings.SAD)} %
+          </Text>
+        </View>
+        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+          <Feeling feeling={eFeelings.ANGRY} />
+          <Text className="font-bold">
+            {getFeelingPercentage(eFeelings.ANGRY)} %
+          </Text>
+        </View>
+      </View>
       <AddNote />
     </View>
   );

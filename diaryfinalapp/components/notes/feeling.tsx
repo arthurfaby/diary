@@ -14,7 +14,7 @@ export function Feeling({ feeling }: { feeling: eFeelings }) {
   } else if (feeling === eFeelings.HAPPY) {
     return <Smile color={"green"} />;
   } else if (feeling === eFeelings.VERY_HAPPY) {
-    return <Laugh />;
+    return <Laugh color={"#4184F6"} />;
   } else if (feeling === eFeelings.SAD) {
     return <Frown color={"brown"} />;
   } else if (feeling === eFeelings.ANGRY) {

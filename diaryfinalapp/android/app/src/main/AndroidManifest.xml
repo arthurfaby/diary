@@ -26,6 +26,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="diaryapp"/>
         <data android:scheme="com.arthurfaby.diaryapp"/>
+        <data android:scheme="exp+diary-app"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>

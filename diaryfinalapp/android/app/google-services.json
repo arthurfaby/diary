@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "778275370686-3smdhop4tsqlvv1g6f13la2qpmjaq27f.apps.googleusercontent.com",
+          "client_type": 3,
+          "android_info": {
+            "package_name": "com.arthurfaby.diaryapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "778275370686-gfr995udoq2bdlh90qcbpcpruqc2k5dq.apps.googleusercontent.com",
+          "client_type": 3,
+          "android_info": {
+            "package_name": "com.arthurfaby.diaryapp",
+            "certificate_hash": "1911ee0cc2cbe1e8412f0afe91cb9b24be2b8216"
+          }
+        },
+        {
           "client_id": "778275370686-71u5suromtpiavqu55uj0p5h1hbcc6o3.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -31,10 +47,10 @@
               "client_type": 3
             },
             {
-              "client_id": "778275370686-6nf73s34mndncc0t33mo3p4pj86bg34v.apps.googleusercontent.com",
-              "client_type": 2,
+              "client_id": "778275370686-e6ebnajm5osbpl9l5atorbgcsa92ika9.apps.googleusercontent.com",
+              "client_type": 3,
               "ios_info": {
-                "bundle_id": "com.arthurfaby.diaryapp"
+                "bundle_id": "com.arthurfaby.diary-app"
               }
             }
           ]

@@ -81,7 +81,7 @@ export function AddNote() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="z-50 min-h-16 size-16 absolute bottom-8 right-4 rounded-full">
+        <Button>
           <Plus color={colors.background} />
         </Button>
       </DialogTrigger>

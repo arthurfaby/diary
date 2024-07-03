@@ -18,14 +18,9 @@ try {
   auth = initializeAuth(app, {
     persistence: getReactNativePersistence(ReactNativeAsyncStorage),
   });
-} catch (error) {
-  console.log("toto");
-}
+} catch (error) {}
 
 export { auth };
 export const db = getFirestore(app);
 
 export const NotesCollection = collection(db, "notes");
-
-console.log("----------" + "-----");
-console.log(db);

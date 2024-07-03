@@ -7,9 +7,10 @@ import { router } from "expo-router";
 
 export type NoteProps = {
   note: iNote;
+  small?: boolean;
 };
 
-export function NoteCard({ note }: NoteProps) {
+export function NoteCard({ note, small }: NoteProps) {
   const handleClick = () => {
     router.push(`/(tabs)/profile/notes/${note.id}`);
   };
@@ -24,9 +25,11 @@ export function NoteCard({ note }: NoteProps) {
           </View>
           <Feeling feeling={note.feeling} />
         </CardHeader>
-        <CardContent>
-          <Text className="line-clamp-2">{note.content}</Text>
-        </CardContent>
+        {!small && (
+          <CardContent>
+            <Text className="line-clamp-2">{note.content}</Text>
+          </CardContent>
+        )}
       </Card>
     </Pressable>
   );
