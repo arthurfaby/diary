@@ -1,16 +1,17 @@
-import { noteInterface } from "~/firebase/types/note.interface";
+import { iNote } from "~/firebase/types/iNote";
 import { create } from "zustand";
 
 interface NoteStoreType {
-  notes: noteInterface[];
-  addNote: (note: noteInterface) => void;
-  removeNote: (note: noteInterface) => void;
+  notes: iNote[];
+  addNote: (note: iNote) => void;
+  removeNote: (note: iNote) => void;
   resetNotes: () => void;
+  getNote(id: string): iNote | undefined;
 }
 
 const useNotes = create<NoteStoreType>((set) => ({
   notes: [],
-  addNote: (note: noteInterface) =>
+  addNote: (note: iNote) =>
     set((state) => {
       if (state.notes.find((n) => n.id === note.id)) {
         return { notes: state.notes };
@@ -20,14 +21,17 @@ const useNotes = create<NoteStoreType>((set) => ({
         notes: newNotes.sort((a, b) => b.date.getTime() - a.date.getTime()),
       };
     }),
-  removeNote: (note: noteInterface) =>
+  removeNote: (note: iNote) =>
     set((state) => {
-      const index = state.notes.indexOf(note);
       return {
-        notes: state.notes.splice(index, 1),
+        notes: state.notes.filter((n) => n.id !== note.id),
       };
     }),
   resetNotes: () => set({ notes: [] }),
+  getNote: (id: string) => {
+    const state: NoteStoreType = useNotes.getState();
+    return state.notes.find((note) => note.id === id);
+  },
 }));
 
 export { useNotes };

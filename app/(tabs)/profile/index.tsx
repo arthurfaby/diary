@@ -7,7 +7,7 @@ import { useNotes } from "~/lib/api/notes/store";
 import { useEffect } from "react";
 import { collection, getDocs, where, query } from "@firebase/firestore";
 import { db, NotesCollection } from "~/firebase/config";
-import { noteInterface } from "~/firebase/types/note.interface";
+import { iNote } from "~/firebase/types/iNote";
 import { NoteCard } from "~/components/notes/noteCard";
 
 export default function Screen() {
@@ -26,7 +26,7 @@ export default function Screen() {
       const docs = await getDocs(q);
       docs.forEach((doc) => {
         const dataDoc = doc.data();
-        const note: noteInterface = {
+        const note: iNote = {
           id: doc.id,
           usermail: dataDoc.usermail,
           title: dataDoc.title,
@@ -55,6 +55,11 @@ export default function Screen() {
         className="h-full flex-col gap-4 overflow-auto"
         showsVerticalScrollIndicator={false}
       >
+        {notes.length === 0 && (
+          <Text className="text-center">
+            No notes yet. Add one with the button in the bottom right corner.
+          </Text>
+        )}
         {notes.map((note) => {
           return <NoteCard key={note.id} note={note} />;
         })}

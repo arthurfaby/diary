@@ -1,34 +1,33 @@
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { noteInterface } from "~/firebase/types/note.interface";
+import { iNote } from "~/firebase/types/iNote";
 import { Text } from "~/components/ui/text";
-import { View } from "react-native";
+import { Pressable, Touchable, View } from "react-native";
 import { Feeling } from "~/components/notes/feeling";
 import { router } from "expo-router";
 
 export type NoteProps = {
-  note: noteInterface;
+  note: iNote;
 };
 
 export function NoteCard({ note }: NoteProps) {
+  const handleClick = () => {
+    router.push(`/(tabs)/profile/notes/${note.id}`);
+  };
+
   return (
-    <Card
-      className="mb-4"
-      onTouchEnd={(event) => {
-        router.push(`/(tabs)/notes/${note.id}`);
-      }}
-    >
-      <CardHeader className="flex-row justify-between">
-        <View>
-          <Text>{note.date.toLocaleDateString("fr")}</Text>
-          <CardTitle>
-            <Text className="text-xl">{note.title}</Text>
-          </CardTitle>
-        </View>
-        <Feeling feeling={note.feeling} />
-      </CardHeader>
-      <CardContent>
-        <Text className=" line-clamp-2">{note.content}</Text>
-      </CardContent>
-    </Card>
+    <Pressable onPress={handleClick}>
+      <Card className="mb-4">
+        <CardHeader className="flex-row justify-between">
+          <View>
+            <Text>{note.date.toLocaleDateString("fr")}</Text>
+            <Text className="font-bold text-xl line-clamp-1">{note.title}</Text>
+          </View>
+          <Feeling feeling={note.feeling} />
+        </CardHeader>
+        <CardContent>
+          <Text className="line-clamp-2">{note.content}</Text>
+        </CardContent>
+      </Card>
+    </Pressable>
   );
 }

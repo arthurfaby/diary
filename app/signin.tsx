@@ -12,9 +12,12 @@ import { useEffect } from "react";
 import { MyUser, useAuth } from "~/lib/auth/useAuth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import Toast from "react-native-toast-message";
+import { maybeCompleteAuthSession } from "expo-web-browser";
 
 export default function Screen() {
   const { setUser } = useAuth();
+
+  maybeCompleteAuthSession();
 
   const githubDiscovery = {
     authorizationEndpoint: "https://github.com/login/oauth/authorize",
@@ -22,11 +25,14 @@ export default function Screen() {
     revocationEndpoint: `https://github.com/settings/connections/applications/${process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID}`,
   };
 
-  const [githubRequest, githubReponse, promptAsyncGithub] = useAuthRequest(
+  const [githubRequest, githubResponse, promptAsyncGithub] = useAuthRequest(
     {
       clientId: process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID!,
-      scopes: ["identity", "user:email", "user:follow"],
-      redirectUri: makeRedirectUri(),
+      scopes: ["identity"],
+      redirectUri: makeRedirectUri({
+        scheme: "diaryapp",
+        path: "signin",
+      }),
     },
     githubDiscovery
   );
@@ -52,10 +58,11 @@ export default function Screen() {
 
   async function handleGithubResponse() {
     try {
+      console.log("response", githubResponse, githubRequest);
       // Verify that everything went well
-      if (githubReponse?.type === "success") {
+      if (githubResponse?.type === "success") {
         // Here we grab the code from the response
-        const { code } = githubReponse.params;
+        const { code } = githubResponse.params;
 
         const { token_type, scope, access_token } =
           await createGithubTokenWithCode(code);
@@ -63,6 +70,7 @@ export default function Screen() {
         if (!access_token) return;
         const credential = GithubAuthProvider.credential(access_token);
         const data = await signInWithCredential(auth, credential);
+        console.log(data);
         setUser({
           name: data.user.displayName ?? "Unknown",
           email: data.user.email ?? "Unknown",
@@ -108,7 +116,7 @@ export default function Screen() {
 
   useEffect(() => {
     handleGithubResponse();
-  }, [githubReponse]);
+  }, [githubResponse]);
 
   return (
     <ScrollView contentContainerClassName="flex-1 justify-center items-center p-6 gap-4">

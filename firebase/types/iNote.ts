@@ -6,8 +6,8 @@ export enum eFeelings {
   ANGRY = "angry",
 }
 
-export interface noteInterface {
-  id?: string;
+export interface iNote {
+  id: string;
   title: string;
   content: string;
   feeling: eFeelings;

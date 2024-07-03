@@ -74,12 +74,14 @@ export default function RootLayout() {
         <Stack.Screen
           name="(tabs)"
           options={{
-            title: "Home page",
+            title: "My profile",
             headerLeft: () => (
               <Button
+                variant="ghost"
                 onPress={() => {
                   auth.signOut();
                   router.replace("/");
+                  router.push("/signin");
                 }}
               >
                 <Text>Logout</Text>
@@ -98,7 +100,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="signin"
           options={{
-            title: "Sign In Page",
+            title: "Sign In",
             headerRight: () => <ThemeToggle />,
           }}
         />

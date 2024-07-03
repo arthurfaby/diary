@@ -1,4 +1,4 @@
-import { eFeelings } from "~/firebase/types/note.interface";
+import { eFeelings } from "~/firebase/types/iNote";
 import {
   Angry,
   CircleHelp,

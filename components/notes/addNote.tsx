@@ -14,7 +14,7 @@ import { useAuth } from "~/lib/auth/useAuth";
 import { Redirect } from "expo-router";
 import { Input } from "~/components/ui/input";
 import { useEffect, useState } from "react";
-import { eFeelings, noteInterface } from "~/firebase/types/note.interface";
+import { eFeelings, iNote } from "~/firebase/types/iNote";
 import { Textarea } from "~/components/ui/textarea";
 import { addDoc } from "@firebase/firestore";
 import { NotesCollection } from "~/firebase/config";
@@ -54,8 +54,7 @@ export function AddNote() {
       return;
     }
 
-    const newNote: noteInterface = {
-      id: createRandomId(20),
+    const noteData: Omit<iNote, "id"> = {
       title,
       content,
       feeling,
@@ -64,7 +63,11 @@ export function AddNote() {
     };
 
     try {
-      await addDoc(NotesCollection, newNote);
+      const docRef = await addDoc(NotesCollection, noteData);
+      const newNote: iNote = {
+        ...noteData,
+        id: docRef.id,
+      };
       addNote(newNote);
     } catch (e) {
       console.log("Error adding document: ", e);

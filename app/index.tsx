@@ -1,12 +1,11 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
+import { Alert, ScrollView } from "react-native";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { router, usePathname } from "expo-router";
 import { MyUser, useAuth } from "~/lib/auth/useAuth";
 import { auth } from "~/firebase/config";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useNotes } from "~/lib/api/notes/store";
 
 export default function Screen() {

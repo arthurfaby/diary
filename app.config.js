@@ -17,6 +17,9 @@ export default {
       googleServicesFile: "./firebase/GoogleService-Info.plist",
       supportsTablet: true,
       bundleIdentifier: "com.arthurfaby.diary-app",
+      entitlements: {
+        "com.apple.developer.networking.wifi-info": true,
+      },
     },
     android: {
       googleServicesFile: "./firebase/google-services.json",
