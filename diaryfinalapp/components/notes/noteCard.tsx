@@ -12,7 +12,7 @@ export type NoteProps = {
 
 export function NoteCard({ note, small }: NoteProps) {
   const handleClick = () => {
-    router.push(`/(tabs)/profile/notes/${note.id}`);
+    router.push(`/notes/${note.id}`);
   };
 
   return (

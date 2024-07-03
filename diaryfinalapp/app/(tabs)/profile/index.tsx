@@ -1,7 +1,7 @@
 import { Image, View } from "react-native";
 import { Text } from "~/components/ui/text";
 import { useAuth } from "~/lib/auth/useAuth";
-import { Redirect } from "expo-router";
+import { Redirect, usePathname } from "expo-router";
 import { AddNote } from "~/components/notes/addNote";
 import { useNotes } from "~/lib/api/notes/store";
 import { useEffect } from "react";
@@ -65,7 +65,7 @@ export function ProfileScreen() {
       <View className=" flex-col gap-4">
         {notes.length === 0 && (
           <Text className="text-center">
-            No notes yet. Add one with the button in the bottom right corner.
+            No notes yet. Add one with the button below.
           </Text>
         )}
         {notes.length === 1 && (
@@ -86,38 +86,40 @@ export function ProfileScreen() {
           </Text>
         )}
       </View>
-      <View className="flex flex-row gap-2 w-[100%]">
-        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
-          <Feeling feeling={eFeelings.VERY_HAPPY} />
-          <Text className="font-bold">
-            {getFeelingPercentage(eFeelings.VERY_HAPPY)} %
-          </Text>
+      {notes.length > 0 && (
+        <View className="flex flex-row gap-2 w-[100%]">
+          <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+            <Feeling feeling={eFeelings.VERY_HAPPY} />
+            <Text className="font-bold">
+              {getFeelingPercentage(eFeelings.VERY_HAPPY)} %
+            </Text>
+          </View>
+          <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+            <Feeling feeling={eFeelings.HAPPY} />
+            <Text className="font-bold">
+              {getFeelingPercentage(eFeelings.HAPPY)} %
+            </Text>
+          </View>
+          <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+            <Feeling feeling={eFeelings.NEUTRAL} />
+            <Text className="font-bold">
+              {getFeelingPercentage(eFeelings.NEUTRAL)} %
+            </Text>
+          </View>
+          <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+            <Feeling feeling={eFeelings.SAD} />
+            <Text className="font-bold">
+              {getFeelingPercentage(eFeelings.SAD)} %
+            </Text>
+          </View>
+          <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
+            <Feeling feeling={eFeelings.ANGRY} />
+            <Text className="font-bold">
+              {getFeelingPercentage(eFeelings.ANGRY)} %
+            </Text>
+          </View>
         </View>
-        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
-          <Feeling feeling={eFeelings.HAPPY} />
-          <Text className="font-bold">
-            {getFeelingPercentage(eFeelings.HAPPY)} %
-          </Text>
-        </View>
-        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
-          <Feeling feeling={eFeelings.NEUTRAL} />
-          <Text className="font-bold">
-            {getFeelingPercentage(eFeelings.NEUTRAL)} %
-          </Text>
-        </View>
-        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
-          <Feeling feeling={eFeelings.SAD} />
-          <Text className="font-bold">
-            {getFeelingPercentage(eFeelings.SAD)} %
-          </Text>
-        </View>
-        <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
-          <Feeling feeling={eFeelings.ANGRY} />
-          <Text className="font-bold">
-            {getFeelingPercentage(eFeelings.ANGRY)} %
-          </Text>
-        </View>
-      </View>
+      )}
       <AddNote />
     </View>
   );

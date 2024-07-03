@@ -2,14 +2,12 @@ import { ScrollView, View } from "react-native";
 import { Text } from "~/components/ui/text";
 import { useEffect, useState } from "react";
 import { useTheme } from "@react-navigation/native";
-import DateTimePicker, { DateType } from "react-native-ui-datepicker";
+import DateTimePicker from "react-native-ui-datepicker";
 import dayjs, { Dayjs } from "dayjs";
 import { iNote } from "~/firebase/types/iNote";
 import { NoteCard } from "~/components/notes/noteCard";
-import { getDocs, query, Timestamp, where } from "@firebase/firestore";
-import { NotesCollection } from "~/firebase/config";
 import { useAuth } from "~/lib/auth/useAuth";
-import { Redirect } from "expo-router";
+import { Redirect, usePathname } from "expo-router";
 import { useNotes } from "~/lib/api/notes/store";
 
 export function AgendaScreen() {
@@ -17,37 +15,26 @@ export function AgendaScreen() {
   const [date, setDate] = useState(dayjs());
   const [dayNotes, setDayNotes] = useState<iNote[]>([]);
   const { user } = useAuth();
+  const { notes } = useNotes();
+  const pathname = usePathname();
 
   if (!user) {
     return <Redirect href="/" />;
   }
 
   useEffect(() => {
-    const getNotes = async () => {
-      const q = query(NotesCollection, where("usermail", "==", user.email));
-      const docs = await getDocs(q);
-      console.log("docs", docs, docs.size);
-      const newNotes: iNote[] = [];
-      docs.forEach((doc) => {
-        const dataDoc = doc.data();
-        console.log(dataDoc);
-        const note: iNote = {
-          id: doc.id,
-          usermail: dataDoc.usermail,
-          title: dataDoc.title,
-          content: dataDoc.content,
-          feeling: dataDoc.feeling,
-          date: new Date(dataDoc.date.seconds * 1000),
-        };
-        if (note.date.toDateString() === date.toDate().toDateString()) {
-          newNotes.push(note);
-        }
-      });
-      setDayNotes(newNotes);
-    };
+    setDate(dayjs());
+  }, [pathname]);
 
-    getNotes();
-  }, [date]);
+  useEffect(() => {
+    const newNotes: iNote[] = [];
+    notes.forEach((note) => {
+      if (note.date.toDateString() === date.toDate().toDateString()) {
+        newNotes.push(note);
+      }
+    });
+    setDayNotes(newNotes);
+  }, [date, notes]);
 
   return (
     <View className="p-6 gap-4">
