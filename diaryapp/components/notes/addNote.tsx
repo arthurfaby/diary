@@ -18,22 +18,9 @@ import { eFeelings, iNote } from "~/firebase/types/iNote";
 import { Textarea } from "~/components/ui/textarea";
 import { addDoc } from "@firebase/firestore";
 import { NotesCollection } from "~/firebase/config";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RNPickerSelect from "react-native-picker-select";
 import { useNotes } from "~/lib/api/notes/store";
-
-function createRandomId(length: number) {
-  let result = "";
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
-}
+import Toast from 'react-native-toast-message';
 
 export function AddNote() {
   const { user } = useAuth();
@@ -70,7 +57,17 @@ export function AddNote() {
       };
       addNote(newNote);
     } catch (e) {
-      console.log("Error adding document: ", e);
+      if (e && typeof e === "object" && "error" in e && typeof e.error === "string") {
+        Toast.show({
+          type: "error",
+          text1: e.error
+        })
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Error"
+        })
+      }
     }
   };
 

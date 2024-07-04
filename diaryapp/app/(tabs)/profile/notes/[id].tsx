@@ -62,7 +62,9 @@ export default function NoteScreen() {
               <Text>{note.date.toLocaleDateString("fr")}</Text>
               <Feeling feeling={note.feeling} />
             </View>
+            <ScrollView className="max-h-28">
             <Text className="text-2xl font-bold">{note.title}</Text>
+            </ScrollView>
           </View>
           <ScrollView>
             <Text>{note.content}</Text>
