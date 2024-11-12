@@ -19,7 +19,6 @@ const Pressable = React.forwardRef<React.ElementRef<typeof RNPressable>, RNPress
     const { children, ...pressableSlotProps } = props;
 
     if (!React.isValidElement(children)) {
-      console.log('Slot.Pressable - Invalid asChild element', children);
       return null;
     }
 
@@ -40,7 +39,6 @@ const View = React.forwardRef<React.ElementRef<typeof RNView>, RNViewProps>(
     const { children, ...viewSlotProps } = props;
 
     if (!React.isValidElement(children)) {
-      console.log('Slot.View - Invalid asChild element', children);
       return null;
     }
 
@@ -61,7 +59,6 @@ const Text = React.forwardRef<React.ElementRef<typeof RNText>, RNTextProps>(
     const { children, ...textSlotProps } = props;
 
     if (!React.isValidElement(children)) {
-      console.log('Slot.Text - Invalid asChild element', children);
       return null;
     }
 
@@ -86,7 +83,6 @@ const Image = React.forwardRef<React.ElementRef<typeof RNImage>, ImageSlotProps>
     const { children, ...imageSlotProps } = props;
 
     if (!React.isValidElement(children)) {
-      console.log('Slot.Image - Invalid asChild element', children);
       return null;
     }
 

@@ -17,7 +17,7 @@ export default function Screen() {
     return auth.onAuthStateChanged((user) => {
       const myUser: MyUser | null = user
         ? ({
-            email: user.email ?? "Unknown email",
+            email: user.email ?? user.uid,
             name: user.displayName ?? "Unknown name",
             photoURL: user.photoURL,
           } as MyUser)

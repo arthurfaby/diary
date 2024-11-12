@@ -41,6 +41,7 @@ export function AgendaScreen() {
       <DateTimePicker
         date={date}
         mode="single"
+        displayFullDays={true}
         selectedItemColor={colors.primary}
         onChange={(params) => {
           setDate(params.date as Dayjs);
@@ -48,7 +49,9 @@ export function AgendaScreen() {
       />
       <ScrollView className="h-[280px]" showsVerticalScrollIndicator={false}>
         {dayNotes.length === 0 && (
-          <Text className="text-center">No notes for this day</Text>
+          <Text className="text-center">
+            No notes for the {date.toDate().toLocaleDateString()}
+          </Text>
         )}
         {dayNotes.map((note) => {
           return <NoteCard note={note} key={note.id} small={true} />;

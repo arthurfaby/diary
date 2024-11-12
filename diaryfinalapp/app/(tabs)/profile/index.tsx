@@ -61,7 +61,6 @@ export function ProfileScreen() {
         />
         <Text className="text-3xl font-bold">{user.name}</Text>
       </View>
-
       <View className=" flex-col gap-4">
         {notes.length === 0 && (
           <Text className="text-center">
@@ -87,7 +86,7 @@ export function ProfileScreen() {
         )}
       </View>
       {notes.length > 0 && (
-        <View className="flex flex-row gap-2 w-[100%]">
+        <View className="flex flex-row gap-2 w-[100%] justify-between items-center">
           <View className="flex gap-2 flex-col justify-center items-center flex-grow bg-secondary rounded-md p-2">
             <Feeling feeling={eFeelings.VERY_HAPPY} />
             <Text className="font-bold">

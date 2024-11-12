@@ -34,42 +34,9 @@ export {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
-  const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
-  const { user } = useAuth();
-
-  React.useEffect(() => {
-    (async () => {
-      const theme = await AsyncStorage.getItem("theme");
-      if (Platform.OS === "web") {
-        // Adds the background color to the html element to prevent white background on overscroll.
-        document.documentElement.classList.add("bg-background");
-      }
-      if (!theme) {
-        AsyncStorage.setItem("theme", colorScheme);
-        setIsColorSchemeLoaded(true);
-        return;
-      }
-      const colorTheme = theme === "dark" ? "dark" : "light";
-      if (colorTheme !== colorScheme) {
-        setColorScheme(colorTheme);
-
-        setIsColorSchemeLoaded(true);
-        return;
-      }
-      setIsColorSchemeLoaded(true);
-    })().finally(() => {
-      SplashScreen.hideAsync();
-    });
-  }, []);
-
-  if (!isColorSchemeLoaded) {
-    return null;
-  }
-
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+    <ThemeProvider value={LIGHT_THEME}>
+      <StatusBar style={"dark"} />
       <Stack>
         <Stack.Screen
           name="(tabs)"
@@ -87,21 +54,18 @@ export default function RootLayout() {
                 <Text>Logout</Text>
               </Button>
             ),
-            headerRight: () => <ThemeToggle />,
           }}
         />
         <Stack.Screen
           name="index"
           options={{
             title: "Diary App",
-            headerRight: () => <ThemeToggle />,
           }}
         />
         <Stack.Screen
           name="signin"
           options={{
             title: "Sign In",
-            headerRight: () => <ThemeToggle />,
           }}
         />
       </Stack>

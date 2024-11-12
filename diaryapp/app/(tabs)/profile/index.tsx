@@ -21,7 +21,6 @@ export default function Screen() {
   useEffect(() => {
     const getNotes = async () => {
       // Get docs where usermail is equal to user.email
-
       const q = query(NotesCollection, where("usermail", "==", user.email));
       const docs = await getDocs(q);
       docs.forEach((doc) => {

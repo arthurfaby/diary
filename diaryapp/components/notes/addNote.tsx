@@ -70,7 +70,6 @@ export function AddNote() {
       };
       addNote(newNote);
     } catch (e) {
-      console.log("Error adding document: ", e);
     }
   };
 

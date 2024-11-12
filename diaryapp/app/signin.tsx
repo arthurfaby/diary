@@ -58,7 +58,6 @@ export default function Screen() {
 
   async function handleGithubResponse() {
     try {
-      console.log("response", githubResponse, githubRequest);
       // Verify that everything went well
       if (githubResponse?.type === "success") {
         // Here we grab the code from the response
@@ -70,10 +69,9 @@ export default function Screen() {
         if (!access_token) return;
         const credential = GithubAuthProvider.credential(access_token);
         const data = await signInWithCredential(auth, credential);
-        console.log(data);
         setUser({
           name: data.user.displayName ?? "Unknown",
-          email: data.user.email ?? "Unknown",
+          email: data.user.email ?? data.user.uid,
           photoURL: data.user.photoURL ?? undefined,
         } as MyUser);
       }
