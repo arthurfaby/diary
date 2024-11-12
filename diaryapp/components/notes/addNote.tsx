@@ -18,9 +18,9 @@ import { eFeelings, iNote } from "~/firebase/types/iNote";
 import { Textarea } from "~/components/ui/textarea";
 import { addDoc } from "@firebase/firestore";
 import { NotesCollection } from "~/firebase/config";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RNPickerSelect from "react-native-picker-select";
 import { useNotes } from "~/lib/api/notes/store";
+import Toast from 'react-native-toast-message';
 
 function createRandomId(length: number) {
   let result = "";
@@ -70,6 +70,17 @@ export function AddNote() {
       };
       addNote(newNote);
     } catch (e) {
+      if (e && typeof e === "object" && "error" in e && typeof e.error === "string") {
+        Toast.show({
+          type: "error",
+          text1: e.error
+        })
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Error"
+        })
+      }
     }
   };
 
